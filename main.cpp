@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <ctime>
 
 using namespace std;
 
@@ -17,16 +16,6 @@ struct info {
     float beratBarang;
 };
 
-
-/* Fungsi untuk mendapatkan tanggal saat ini
-string getCurrentDate() {
-    time_t now = time(0);
-    tm *ltm = localtime(&now);
-    int day = ltm->tm_mday;
-    int month = 1 + ltm->tm_mon;
-    int year = 1900 + ltm->tm_year;
-    return to_string(day) + "/" + to_string(month) + "/" + to_string(year);
-}*/
 
 int main() {
     info informasi;
