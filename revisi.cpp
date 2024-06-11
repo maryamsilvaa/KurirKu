@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>  // Untuk fungsi rand() dan srand()
+#include <ctime>    // Untuk fungsi time()
+#include <fstream>  // Untuk operasi file
 
 using namespace std;
 
@@ -14,8 +17,27 @@ struct info {
     string nomorResi;
     string tglKirim;
     float beratBarang;
+    float harga;    // Tambahkan harga
 };
 
+// Fungsi untuk meng-generate nomor resi random sebanyak 4 digit
+string generateNomorResi() {
+    srand(time(0)); // Menginisialisasi seed random dengan waktu sekarang
+    int resi = rand() % 9000 + 1000; // Meng-generate nomor random 4 digit
+    return to_string(resi);
+}
+
+// Fungsi untuk menyimpan nomor resi ke dalam file
+void simpanNomorResiKeFile(const string& nomorResi) {
+    ofstream file("resi.txt");
+    if (file.is_open()) {
+        file << "Nomor Resi: " << nomorResi << endl;
+        file.close();
+        cout << "Nomor resi telah disimpan ke dalam file resi.txt" << endl;
+    } else {
+        cout << "Gagal membuka file resi.txt" << endl;
+    }
+}
 
 int main() {
     info informasi;
@@ -37,8 +59,12 @@ int main() {
     getline(cin, informasi.alamatPenerima);
     cout << "Nomor Handphone: ";
     getline(cin, informasi.kontakPenerima);
-    cout << "Masukkan nomor resi: ";
-    cin >> informasi.nomorResi;
+
+    // Generate nomor resi random
+    informasi.nomorResi = generateNomorResi();
+
+    // Simpan nomor resi ke dalam file
+    simpanNomorResiKeFile(informasi.nomorResi);
 
     // Input tgl kirim
     cout << "Masukkan tanggal pengiriman (dd/mm/yyyy): ";
@@ -47,6 +73,10 @@ int main() {
     // Input berat barang
     cout << "Masukkan berat barang (dalam gram): ";
     cin >> informasi.beratBarang;
+
+    // Input harga
+    cout << "Masukkan harga (dalam rupiah): ";
+    cin >> informasi.harga;
 
     // Menampilkan resi barang
     cout << "\n=== Resi Barang ===" << endl;
@@ -63,6 +93,7 @@ int main() {
     cout << "\nNomor Resi: " << informasi.nomorResi << endl;
     cout << "Tanggal Pengiriman: " << informasi.tglKirim << endl;
     cout << "Berat Barang: " << informasi.beratBarang << " gram" << endl;
+    cout << "Harga: " << informasi.harga << " rupiah" << endl;
 
     return 0;
 }
